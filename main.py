@@ -1,18 +1,25 @@
-from observers import ConcreteObserverA, ConcreteObserverB
-from subjects import ConcreteSubject, Subject
+from builder import Product
+from concrete_builder import ConcreteBuilder1
+from director import Director
 
 if __name__ == "__main__":
-    subject = ConcreteSubject()
+    director = Director()
+    builder = ConcreteBuilder1()
+    director.builder = builder
 
-    observer_a = ConcreteObserverA()
-    subject.attach(observer_a)
+    print("Standard basic product: ")
+    director.build_minimal_viable_product()
+    builder.product.list_parts()
 
-    observer_b = ConcreteObserverB()
-    subject.attach(observer_b)
+    print("\n")
 
-    subject.some_business_logic()
-    subject.some_business_logic()
+    print("Standard full featured product: ")
+    director.build_full_featured_product()
+    builder.product.list_parts()
 
-    subject.detach(observer_a)
+    print("\n")
 
-    subject.some_business_logic()
+    print("Custom product: ")
+    builder.produce_part_a()
+    builder.produce_part_b()
+    builder.product.list_parts()
