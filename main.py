@@ -1,25 +1,19 @@
-from builder import Product
-from concrete_builder import ConcreteBuilder1
-from director import Director
+from abstract_factory import AbstractFactory
+from concrete_factory import ConcreteFactory1, ConcreteFactory2
+from concrete_products import ConcreteProductA1, ConcreteProductA2, ConcreteProductB1, ConcreteProductB2
+
+def client_code(factory: AbstractFactory) -> None:
+    product_a = factory.create_product_a()
+    product_b = factory.create_product_b()
+
+    print(f"{product_b.useful_function_b()}")
+    print(f"{product_b.another_useful_function_b(product_a)}", end="")
 
 if __name__ == "__main__":
-    director = Director()
-    builder = ConcreteBuilder1()
-    director.builder = builder
-
-    print("Standard basic product: ")
-    director.build_minimal_viable_product()
-    builder.product.list_parts()
+    print("Client: Testing client code with the first factory type:")
+    client_code(ConcreteFactory1())
 
     print("\n")
 
-    print("Standard full featured product: ")
-    director.build_full_featured_product()
-    builder.product.list_parts()
-
-    print("\n")
-
-    print("Custom product: ")
-    builder.produce_part_a()
-    builder.produce_part_b()
-    builder.product.list_parts()
+    print("Client: Testing the same client code with the second factory type:")
+    client_code(ConcreteFactory2())
