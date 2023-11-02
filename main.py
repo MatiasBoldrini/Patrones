@@ -1,11 +1,13 @@
-from commands import SimpleCommand, ComplexCommand
-from receiver import Receiver
-from invoker import Invoker
+from creators import ConcreteCreator1, ConcreteCreator2, Creator
+
+def client_code(creator: Creator) -> None:
+    print(f"Client: I'm not aware of the creator's class, but it still works.\n"
+          f"{creator.some_operation()}", end="")
 
 if __name__ == "__main__":
-    invoker = Invoker()
-    invoker.set_on_start(SimpleCommand("Say Hi!"))
-    receiver = Receiver()
-    invoker.set_on_finish(ComplexCommand(receiver, "Send email", "Save report"))
+    print("App: Launched with the ConcreteCreator1.")
+    client_code(ConcreteCreator1())
+    print("\n")
 
-    invoker.do_something_important()
+    print("App: Launched with the ConcreteCreator2.")
+    client_code(ConcreteCreator2())
